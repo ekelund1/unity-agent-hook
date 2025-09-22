@@ -1,21 +1,49 @@
 {
   "name": "unity-agent-hook",
-  "version": "1.0.0",
-  "description": "Hook for allowing an Agentic LLM to interact with a Unity3d process",
-  "main": "index.js",
+  "displayName": "unity-agent-hook",
+  "description": "Hook that allows Agentic LLM to communicate with Unity",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+      "commands": [
+        {
+          "command": "unity-agent.recompile",
+          "title": "Unity Agent: Force Recompile",
+          "description": "Triggers a recompile in the active Unity project."
+        },
+        {
+          "command": "unity-agent.runTests",
+          "title": "Unity Agent: Run Unit Tests",
+          "description": "Runs all EditMode tests in the active Unity project."
+        }
+      ]
+  },
   "scripts": {
-    "test": "test"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ekelund1/unity-agent-hook.git"
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.104.0",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.34.0",
+    "typescript": "^5.9.2"
   },
-  "author": "Jonathan Ekelund",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ekelund1/unity-agent-hook/issues"
-  },
-  "homepage": "https://github.com/ekelund1/unity-agent-hook#readme",
   "dependencies": {
     "axios": "^1.12.2"
   }
