@@ -1,0 +1,22 @@
+{
+  "name": "unity-agent-hook",
+  "version": "1.0.0",
+  "description": "Hook for allowing an Agentic LLM to interact with a Unity3d process",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekelund1/unity-agent-hook.git"
+  },
+  "author": "Jonathan Ekelund",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekelund1/unity-agent-hook/issues"
+  },
+  "homepage": "https://github.com/ekelund1/unity-agent-hook#readme",
+  "dependencies": {
+    "axios": "^1.12.2"
+  }
+}
