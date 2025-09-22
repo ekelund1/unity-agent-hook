@@ -39,42 +39,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
-const axios_1 = __importDefault(require("axios")); // For making HTTP requests
-// This method is called when your extension is activated
+const axios_1 = __importDefault(require("axios"));
+async function showResultInNewDocument(content, language) {
+    const document = await vscode.workspace.openTextDocument({ content, language });
+    await vscode.window.showTextDocument(document, vscode.ViewColumn.Beside);
+}
 function activate(context) {
-    console.log('Congratulations, your extension "unity-agent-controller" is now active!');
-    // --- IMPLEMENTATION OF THE RECOMPILE COMMAND ---
+    console.log('Unity Agent Controller is now active.');
     let recompileCommand = vscode.commands.registerCommand('unity-agent.recompile', async () => {
         vscode.window.showInformationMessage('Sending recompile command to Unity...');
         try {
             const response = await axios_1.default.get('http://localhost:8080/refresh', { timeout: 30000 });
-            vscode.window.showInformationMessage('Unity Recompile Result: Success');
-            // A more advanced implementation would show the result in a new document
-            return response.data;
+            // Show plain text result
+            await showResultInNewDocument(response.data, 'plaintext');
         }
         catch (error) {
-            console.error('Unity Recompile Failed:', error.message);
-            vscode.window.showErrorMessage('Unity Recompile Failed: ' + error.message);
-            return 'Error: ' + error.message;
+            // Show error in a new document for better readability
+            await showResultInNewDocument(`Unity Recompile Failed:\n\n${error.message}`, 'plaintext');
         }
     });
-    // --- IMPLEMENTATION OF THE RUN TESTS COMMAND ---
     let runTestsCommand = vscode.commands.registerCommand('unity-agent.runTests', async () => {
         vscode.window.showInformationMessage('Sending run tests command to Unity...');
         try {
             const response = await axios_1.default.get('http://localhost:8080/run-tests', { timeout: 120000 });
-            vscode.window.showInformationMessage('Unity Test Run Complete.');
-            // Return the raw JSON string for the agent to process
-            return JSON.stringify(response.data, null, 2);
+            const prettyJson = JSON.stringify(response.data, null, 2);
+            // Show result as JSON for syntax highlighting
+            await showResultInNewDocument(prettyJson, 'json');
         }
         catch (error) {
-            console.error('Unity Test Run Failed:', error.message);
-            vscode.window.showErrorMessage('Unity Test Run Failed: ' + error.message);
-            return 'Error: ' + error.message;
+            await showResultInNewDocument(`Unity Test Run Failed:\n\n${error.message}`, 'plaintext');
         }
     });
     context.subscriptions.push(recompileCommand, runTestsCommand);
 }
-// This method is called when your extension is deactivated
 function deactivate() { }
 //# sourceMappingURL=extension.js.map
