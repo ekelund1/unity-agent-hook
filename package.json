@@ -12,18 +12,18 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-      "commands": [
-        {
-          "command": "unity-agent.recompile",
-          "title": "Unity Agent: Force Recompile",
-          "description": "Triggers a recompile in the active Unity project."
-        },
-        {
-          "command": "unity-agent.runTests",
-          "title": "Unity Agent: Run Unit Tests",
-          "description": "Runs all EditMode tests in the active Unity project."
-        }
-      ]
+    "commands": [
+      {
+        "command": "unity-agent.recompile",
+        "title": "Unity Agent: Force Recompile",
+        "description": "Triggers a recompile in the active Unity project."
+      },
+      {
+        "command": "unity-agent.runTests",
+        "title": "Unity Agent: Run Unit Tests",
+        "description": "Runs all EditMode tests in the active Unity project."
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "@types/vscode": "^1.104.0",
+    "@types/vscode": "^1.103.0",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
     "@vscode/test-cli": "^0.0.11",
@@ -45,6 +45,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@vscode/vsce": "^3.6.0",
     "axios": "^1.12.2"
   }
 }
